@@ -9,12 +9,7 @@ const setUpAndStartServer=()=>{
     app.use(bodyParser.urlencoded({extended:true}));
     app.listen(PORT,()=>{
         console.log('connected');
-        sendBasicEmail(
-            'flightsbookingservices@gmail.com',
-            'ss100200200@gmail.com',
-            'dummy subject for test',
-            'testing the nodemailer via smtp server of gmail'
-        );
+        
     });
 }
 setUpAndStartServer();
