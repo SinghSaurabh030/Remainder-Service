@@ -1,5 +1,6 @@
 const sender=require('../config/emailConfig');
-
+const RemainderRepository = require('../repository/remainder-repository');
+const repo=new RemainderRepository();
 const sendBasicEmail=(mailFrom,mailTo,mailSubject,mailBody)=>{
     try {
         sender.sendMail({
@@ -12,6 +13,36 @@ const sendBasicEmail=(mailFrom,mailTo,mailSubject,mailBody)=>{
         console.log(error);
     }
 }
+const fetchPendingEmail=async ()=>{
+    try {
+        const response=await repo.get({status:"PENDING"});
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+const createNotification=async (data)=>{
+    try {
+        const response=await repo.create(data);
+        return response
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+const updateTicket=async (ticketId,data)=>{
+    try {
+        await repo.update(ticketId,data);
+        return true;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 module.exports={
-    sendBasicEmail
+    sendBasicEmail,
+    fetchPendingEmail,
+    createNotification,
+    updateTicket
 }
